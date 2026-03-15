@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0A0A0F;
+  --surface: #111118;
+  --panel: #1A1A24;
+  --border: #2A2A3A;
+  --accent: #4F8EF7;
+  --success: #22C55E;
+  --warn: #F59E0B;
+  --danger: #EF4444;
+  --text: #E8E8F0;
+  --text-dim: #9090A8;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--ink);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--surface); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+/* Grid overlay background */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(79,142,247,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(79,142,247,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Glow effect */
+.glow { box-shadow: 0 0 24px rgba(79,142,247,0.3), 0 0 48px rgba(79,142,247,0.1); }
+.glow-sm { box-shadow: 0 0 12px rgba(79,142,247,0.25); }
+
+/* Scanner line animation */
+@keyframes scanLine {
+  0% { transform: translateY(0); opacity: 0.8; }
+  100% { transform: translateY(100%); opacity: 0; }
+}
+.scan-line {
+  animation: scanLine 2s linear infinite;
+  background: linear-gradient(transparent, rgba(79,142,247,0.6), transparent);
+  height: 4px;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  pointer-events: none;
+}
+
+@keyframes cornerPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.corner-pulse { animation: cornerPulse 1.5s ease-in-out infinite; }
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: fadeInUp 0.5s ease-out forwards; }
+
+@keyframes progressFill {
+  from { width: 0%; }
+  to { width: var(--progress-width); }
+}
+.progress-fill { animation: progressFill 1s ease-out forwards; }

@@ -1,9 +1,9 @@
 fastapi==0.111.0
 uvicorn[standard]==0.29.0
 python-multipart==0.0.9
-motor==3.4.0
+motor==3.6.0
 beanie==1.25.0
-pymongo>=4.7.2
+pymongo>=4.7.2,<4.16
 faiss-cpu==1.13.0
 numpy>=1.26.4
 Pillow>=10.3.0

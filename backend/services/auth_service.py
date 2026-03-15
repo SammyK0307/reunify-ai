@@ -1,29 +1,37 @@
-"""JWT authentication for law enforcement users"""
+"""JWT authentication for law enforcement users - bcrypt compatible version"""
 
 from datetime import datetime, timedelta
 from typing import Optional
 import os
 import jwt
-from passlib.context import CryptContext
+import bcrypt
 from fastapi import HTTPException, Security
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 
-SECRET_KEY = os.getenv("JWT_SECRET", "reunify-ai-super-secret-change-in-production")
+SECRET_KEY = os.getenv("JWT_SECRET", "reunify-secret-key-123")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS = 12
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 security = HTTPBearer()
 
-# Demo users (in production use MongoDB users collection)
+
+def hash_password(password: str) -> str:
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
+
+def verify_password(password: str, hashed: str) -> bool:
+    return bcrypt.checkpw(password.encode("utf-8"), hashed.encode("utf-8"))
+
+
+# Demo users - passwords hashed at import time using bcrypt directly
 DEMO_USERS = {
     "officer@reunify.ai": {
-        "password_hash": pwd_context.hash("demo1234"),
+        "password_hash": hash_password("demo1234"),
         "role": "officer",
         "name": "Officer Demo",
     },
     "admin@reunify.ai": {
-        "password_hash": pwd_context.hash("admin1234"),
+        "password_hash": hash_password("admin1234"),
         "role": "admin",
         "name": "Admin User",
     },
